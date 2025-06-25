@@ -14,4 +14,16 @@ const createNote = async (req, res) => {
   }
 };
 
-module.exports = {createNote};
+// create get method  to get data
+
+const getNote = async (req, res) => {
+  try {
+    const data = await Notes.find();
+    console.log("data fetching Succesfully");
+    res.status(200).json(data);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server err" });
+  }
+};
+module.exports = { createNote, getNote };
