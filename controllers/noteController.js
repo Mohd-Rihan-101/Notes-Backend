@@ -47,4 +47,22 @@ const updateNote = async (req, res) => {
     res.status(500).json({ error: "Internal server err" });
   }
 };
-module.exports = { createNote, getNote, updateNote };
+
+//create DELETE method to delete data
+const deleteNote =async (req,res)=>{
+    try {
+        const noteId = req.body.id;
+    const response = await Notes.findByIdAndDelete(noteId);
+
+    if(!response){
+        return res.status(400).json({massage : "Not not found"});
+    }
+    console.log("data delete successfully");
+    res.status(200).json(response);
+    } catch (error) {
+         console.log(error);
+    res.status(500).json({ error: "Internal server err" });
+    }
+    
+}
+module.exports = { createNote, getNote, updateNote, deleteNote };
