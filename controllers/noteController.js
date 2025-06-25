@@ -26,4 +26,25 @@ const getNote = async (req, res) => {
     res.status(500).json({ error: "Internal server err" });
   }
 };
-module.exports = { createNote, getNote };
+
+// create PUT method to update data
+const updateNote = async (req, res) => {
+  try {
+    const noteId = req.body.id;
+    const updateNoteData = req.body;
+
+    const response = await Notes.findByIdAndUpdate(noteId, updateNoteData, {
+      new: true,
+      runValidators: true,
+    });
+    if (!response) {
+      return res.status(400).json({ massage: "Note NOT found" });
+    }
+    console.log("Data Update Succesfully");
+    res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server err" });
+  }
+};
+module.exports = { createNote, getNote, updateNote };
